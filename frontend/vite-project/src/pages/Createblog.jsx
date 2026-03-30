@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import {toast} from "react-hot-toast";
 import { Link, Navigate } from 'react-router';
 import { useNavigate } from 'react-router';
+import api from '../../lib/axios';
 
 function Createblog() {
   const [title, setTitle] = useState("");
@@ -16,7 +17,7 @@ function Createblog() {
       return;
     } else {
     try {
-       await axios.post("http://localhost:5000/api/blog/", {
+       await api.post("/blog/", {
         title,content
       });
       toast.success("blog created successfully");

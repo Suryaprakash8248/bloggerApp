@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from 'react-router';
 import Blogcard from "../components/Blogcard";
 import Warningblogcard from "../components/Warningblogcard";
+import api from "../../lib/axios";
 
 function Homepage() {
   const [blogs, setBlogs] = useState([]);
@@ -15,7 +16,7 @@ function Homepage() {
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/blog/");
+        const res = await api.get("/blog");
         setBlogs(res.data);
       } catch (err) {
         console.log(err);

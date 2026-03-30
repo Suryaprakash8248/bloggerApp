@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react'
 import toast from 'react-hot-toast';
 import { Link,useParams } from 'react-router'
 import { useNavigate } from 'react-router';
+import api from '../../lib/axios';
 
 
 
@@ -17,7 +18,7 @@ function Updateblog() {
   useEffect(()=>{
      const fetchBlog = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/blog/${id}`);
+        const response = await api.get(`/blog/${id}`);
         setOldTitle(response.data.title);
         setOldContent(response.data.content);
 
@@ -48,7 +49,7 @@ function Updateblog() {
   }
 
   try {
-    await axios.put(`http://localhost:5000/api/blog/${id}`, {
+    await api.put(`/blog/${id}`, {
       title,
       content
     });

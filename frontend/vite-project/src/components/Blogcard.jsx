@@ -1,13 +1,14 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { Link} from 'react-router';
+import api from '../../lib/axios';
 
 function Blogcard({ blog, onDelete }) {
 
   async function handleDelete(id) {
     if (window.confirm("Delete this blog?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/blog/${id}`);
+        await api.delete(`/blog/${id}`);
         toast.success("Deleted!");
         onDelete(id);
       } catch (err) {
