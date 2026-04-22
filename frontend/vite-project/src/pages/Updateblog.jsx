@@ -13,12 +13,17 @@ function Updateblog() {
    const [oldTitle, setOldTitle] = useState("");
   const [oldContent, setOldContent] = useState("");
   const {id} = useParams();
-  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
+  const navigate = useNavigate();
+  console.log(token);
+  
   useEffect(()=>{
      const fetchBlog = async () => {
       try {
-        const response = await api.get(`/blog/${id}`);
+        const response = await api.get(`/blog/specificblog/${id}`, {
+          headers:{Authorization:`Bearer ${token}`}
+        });
         setOldTitle(response.data.title);
         setOldContent(response.data.content);
 
@@ -38,7 +43,7 @@ function Updateblog() {
     content.trim() === oldContent.trim()
   ) {
     if(window.confirm("No changes made in this blog! wanna head to homepage")) {
-      navigate("/");
+      navigate("/homepage");
     }
     return;
   }
@@ -52,10 +57,10 @@ function Updateblog() {
     await api.put(`/blog/${id}`, {
       title,
       content
-    });
+    }, {headers:{Authorization:`Bearer ${token}`}});
 
     toast.success("Blog updated successfully");
-    navigate("/");
+    navigate("/homepage");
   } catch (error) {
     toast.error("Failed to update the blog");
     console.log(error);

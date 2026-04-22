@@ -12,6 +12,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.2.2",
     "axios": "^1.13.6",
+    "bcrypt": "^6.0.0",
     "blogger": "file:../..",
     "cors": "^2.8.6",
     "react": "^19.2.4",

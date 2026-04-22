@@ -4,11 +4,12 @@ import { Link} from 'react-router';
 import api from '../../lib/axios';
 
 function Blogcard({ blog, onDelete }) {
+    const token = localStorage.getItem("token");
 
   async function handleDelete(id) {
     if (window.confirm("Delete this blog?")) {
       try {
-        await api.delete(`/blog/${id}`);
+        await api.delete(`/blog/${id}`, {headers:{Authorization:`Bearer ${token}`}});
         toast.success("Deleted!");
         onDelete(id);
       } catch (err) {

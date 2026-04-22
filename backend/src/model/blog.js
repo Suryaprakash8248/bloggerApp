@@ -8,8 +8,12 @@ const blogSchema = new mongoose.Schema({
   content:{
     type:String,
     required:true
+  }, userId:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"user",
+    required:true
   }
-},{timeStamp:true});
+},{timestamps:true});
 
 const blog = mongoose.model("blog", blogSchema);
 

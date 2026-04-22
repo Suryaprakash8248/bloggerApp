@@ -1,5 +1,8 @@
 import { json } from "express";
 import blog from "../model/blog.js";
+import bcrypt from "bcrypt";
+import user from "../model/user.js";
+
 
 export const getAllBlog = async(req,res)=> {
   try {
@@ -23,10 +26,23 @@ export const getThisBlog = async (req,res)=> {
   }
 }
 
-export const postBLog = async(req,res)=> {
-  const {title,content} = req.body;
+export const getThisUserBlog = async (req,res)=> {
+  const id = req.params.userId;
   try {
-    const newBlog = new blog({title,content});
+    const response = await blog.find({userId:id});
+    res.json(response);
+    console.log(response.data);
+    
+  } catch (error) {
+    console.log(`failed to get this user's blog`,error);
+    res.json({message:"failed to get this user's bog"})
+  }
+}
+
+export const postBLog = async(req,res)=> {
+  const {title,content,userId} = req.body;
+  try {
+    const newBlog = new blog({title,content, userId:req.body.userId});
     const savedBlog = await newBlog.save();
     res.status(201).json(savedBlog);
     

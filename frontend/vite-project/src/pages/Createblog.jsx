@@ -8,26 +8,37 @@ import api from '../../lib/axios';
 function Createblog() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+    const token = localStorage.getItem("token");
+
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  console.log("token-----",token, userInfo);
   const navigate = useNavigate();
+
    async function handleSubmit(e) {
     e.preventDefault();
-
+    
+    console.log(userInfo);
+    
     if(title==="" || content==="") {
       toast.error("you should provide both Title and Content");
       return;
     } else {
     try {
        await api.post("/blog/", {
-        title,content
+        title,content, userId:userInfo._id
+      }, {
+        headers:{Authorization: `Bearer ${token}`}
       });
       toast.success("blog created successfully");
-      navigate("/");
+      navigate("/homepage");
     } catch (error) {
       toast.error("failed to create blog")
       console.log("failed to create blog",error);
       
     }};
-  }
+  };
+
+
   return (
     <div className="min-h-screen bg-gray-900 text-white flex justify-center items-center">
       <form
@@ -65,3 +76,4 @@ function Createblog() {
 }
 
 export default Createblog;
+
